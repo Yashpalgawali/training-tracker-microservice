@@ -1,0 +1,12 @@
+
+build:
+  version: 2.0
+
+designation-service-prod:
+  message: "WelCome to Designation Microservice PROD API"
+  contactDetails:
+    name: "Shaurya"
+    email: "shaurya@gmail.com"
+  onCallSupport:
+    - (222)417-645
+    - (222)0145-456

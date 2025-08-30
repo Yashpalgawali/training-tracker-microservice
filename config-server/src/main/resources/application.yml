@@ -1,0 +1,20 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: "config-server"
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+#        git:
+#          uri: "https://github.com/Yashpalgawali/training-tracker-microservice-config.git"
+#          clone-on-start: true
+#          default-label: main
+#          timeout: 5
+#          force-pull: true
+        native:
+#          search-locations: "classpath:/config"
+          search-locations: "file:///E://training tracker microservice config//config"

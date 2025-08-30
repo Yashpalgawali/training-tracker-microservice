@@ -1,0 +1,12 @@
+build:
+  version:
+    2.0
+
+company-service-prod:
+  message: "Welcome to Company Microservice PROD API"
+  contactDetails:
+    name: "Yashpal Gawali"
+    email: "crankyash@gmail.com"
+  onCallSupport:
+    - (111)789-7145
+    - (111)547-7412

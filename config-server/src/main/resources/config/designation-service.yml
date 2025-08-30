@@ -1,0 +1,12 @@
+
+build:
+  version: 1.0
+
+designation-service:
+  message: "WelCome to Designation Microservice DEFAULT API"
+  contactDetails:
+    name: "Sumedh"
+    email: "sumedh@gmail.com"
+  onCallSupport:
+    - (222)3102-456
+    - (222)1472-301

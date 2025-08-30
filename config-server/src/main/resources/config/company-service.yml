@@ -1,0 +1,12 @@
+
+build:
+  version: 1.0
+
+company-service:
+  message: "Welcome to Company Microservice DEFAULT (updated) Profile"
+  contactDetails:
+    name: "Samyak"
+    email: "samyak@gmail.com"
+  onCallSupport:
+    - (000)310-8714
+    - (000)487-3102
