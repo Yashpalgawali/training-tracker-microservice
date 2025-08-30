@@ -3,9 +3,11 @@ package com.example.demo.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.Training;
 import com.example.demo.exceptions.ResourceNotFoundException;
+import com.example.demo.exceptions.ResourceNotModifiedException;
 import com.example.demo.repository.TrainingRepository;
 import com.example.demo.service.ITrainingService;
 
@@ -35,6 +37,19 @@ public class TrainingServImpl implements ITrainingService {
 	public List<Training> getAllTrainings() {
 	 
 		return trainrepo.findAll();
+	}
+
+	@Override
+	@Transactional
+	public int updateTraining(Training training) {
+
+		var result = trainrepo.updateTraining(training.get_id(), training.getTrainingName());
+		if(result!=null) {
+			return 1;
+		}
+		else {
+			throw new ResourceNotModifiedException("Training "+training.getTrainingName()+" is not Updated");
+		}
 	}
 
 }

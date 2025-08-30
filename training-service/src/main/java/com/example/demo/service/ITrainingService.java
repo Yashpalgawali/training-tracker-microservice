@@ -11,4 +11,6 @@ public interface ITrainingService {
 	public Training getTrainingById(String training_id);
 	
 	public List<Training> getAllTrainings();
+	
+	public int updateTraining(Training training);
 }
