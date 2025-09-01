@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.TrainingContactInfoDto;
 import com.example.demo.entity.Training;
 import com.example.demo.service.ITrainingService;
 
@@ -30,6 +32,9 @@ public class TrainingController {
 		super();
 		this.trainserv = trainserv;
 	}
+	
+	@Autowired
+	private TrainingContactInfoDto trainingContactInfo;
 	
 	@PostMapping("/")
 	public ResponseEntity<ResponseDto> saveTraining(@Valid @RequestBody Training training )
@@ -58,5 +63,10 @@ public class TrainingController {
 		System.err.println(training.toString());
 		trainserv.updateTraining(training);
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(HttpStatus.OK.toString(),"Training "+training.getTrainingName()+" is Updated successfully"));
+	}
+	
+	@GetMapping("/contact-info")
+	public ResponseEntity<TrainingContactInfoDto> getContactInfo(){
+		return ResponseEntity.ok(trainingContactInfo);
 	}
 }

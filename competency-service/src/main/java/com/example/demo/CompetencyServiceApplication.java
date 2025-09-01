@@ -4,14 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.example.demo.dto.TrainingContactInfoDto;
+import com.example.demo.dto.CompetencyContactInfoDto;
 
 @SpringBootApplication
-@EnableConfigurationProperties(value = {TrainingContactInfoDto.class})
-public class TrainingServiceApplication {
+@EnableConfigurationProperties(value = {CompetencyContactInfoDto.class})
+public class CompetencyServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrainingServiceApplication.class, args);
+		SpringApplication.run(CompetencyServiceApplication.class, args);
 	}
 
 }

@@ -9,6 +9,5 @@ import com.example.demo.entity.Training;
 @Repository("trainrepo")
 public interface TrainingRepository extends MongoRepository<Training, String> {
 
-	@Query("UPDATE Training t SET t.trainingName=:training_name WHERE t.id=:id")
-	public Training updateTraining(String id,String training_name);
+	
 }

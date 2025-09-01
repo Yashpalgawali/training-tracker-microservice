@@ -22,5 +22,5 @@ public class Training {
 	String _id;
 
 	@Size(min = 2,max = 100,message = "Tranining name must have at least two characters")
-	String trainingName;	
+	String trainingName;
 }

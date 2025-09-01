@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: competency-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/competencyservice
+      username: root
+      password: root
+  config:
+    import: optional:configserver:http://localhost:8071/
+server:
+  port: 8787
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

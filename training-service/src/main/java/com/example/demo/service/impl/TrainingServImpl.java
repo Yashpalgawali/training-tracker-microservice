@@ -42,8 +42,8 @@ public class TrainingServImpl implements ITrainingService {
 	@Override
 	@Transactional
 	public int updateTraining(Training training) {
+		var result =  trainrepo.save(training);
 
-		var result = trainrepo.updateTraining(training.get_id(), training.getTrainingName());
 		if(result!=null) {
 			return 1;
 		}
