@@ -24,8 +24,8 @@ import jakarta.validation.Valid;
 @RequestMapping("company")
 public class CompanyController {
 
-	@Value("${build.version}")
-	private String buildInfo;
+//	@Value("${build.version}")
+//	private String buildInfo;
 		
 	@Autowired
 	private CompanyContactInfoDto companyContactInfoDto;
@@ -66,10 +66,10 @@ public class CompanyController {
 		return ResponseEntity.status(HttpStatus.OK).body(company);
 	}
 	
-	@GetMapping("/build-info")
-	public ResponseEntity<String> getBuildInfo(){
-		return ResponseEntity.status(HttpStatus.OK).body(buildInfo);
-	}
+//	@GetMapping("/build-info")
+//	public ResponseEntity<String> getBuildInfo(){
+//		return ResponseEntity.status(HttpStatus.OK).body(buildInfo);
+//	}
 	
 	@GetMapping("/contact-info")
 	public ResponseEntity<CompanyContactInfoDto> getContactInfo(){
