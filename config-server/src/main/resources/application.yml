@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: "config-server"
+    name: "configserver"
   profiles:
     active: git
   cloud:
@@ -18,3 +18,24 @@ spring:
 #        native:
 #          search-locations: "classpath:/config"
 #          search-locations: "file:///E://training tracker microservice config//config"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+

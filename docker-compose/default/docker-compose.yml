@@ -1,0 +1,105 @@
+services:
+  rabbit:
+    image: rabbitmq:4-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  companyservicedb:
+    container_name: "companyservicedb"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: "companyservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  trainingservicedb:
+    container_name: "trainingservicedb"
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: "trainingservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-mongodb-config
+
+  configserver:
+    image: "yashpalgawali/configserver:s6"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  companyservice:
+    image: "yashpalgawali/companyservice:s6"
+    container_name: company-ms
+    ports:
+      - "8383:8383"
+    depends_on:
+      configserver:
+        condition: service_healthy
+      companyservicedb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "companyservice"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://companyservicedb:3306/companyservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  trainingservice:
+    image: "yashpalgawali/trainingservice:s6"
+    container_name: training-service-ms
+    ports:
+      - "8585:8585"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "trainingservice"
+      SPRING_DATA_MONGODB_URI: "mongodb://root:root@trainingservicedb:27017/trainingservicedb?authSource=admin"
+
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+#  trainingtimeslotservice:
+#    image: "yashpalgawali/trainingtimeslotservice:s6"
+#    container_name: training-time-slot-service-ms
+#    ports:
+#      - "8686:8686"
+#    depends_on:
+#      configserver:
+#        condition: service_healthy
+#    environment:
+#      SPRING_APPLICATION_NAME: "trainingtimeslotservice"
+#    extends:
+#      file: common-config.yml
+#      service: microservice-configserver-config
+
+networks:
+  eazybank:
+    driver: "bridge"

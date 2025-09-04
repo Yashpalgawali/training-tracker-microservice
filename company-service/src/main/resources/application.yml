@@ -1,21 +1,27 @@
 spring:
   application:
     name: "companyservice"
-  profiles:
-    active: "prod"
+#  profiles:
+#    active: "default"
   datasource:
-#    url: jdbc:mysql://localhost:3399/companymicroservice
     url: jdbc:mysql://localhost:3306/companyservicedb
     username: root
     password: root
+#  sql:
+#    init:
+#      mode: always
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
+#    properties:
+#      hibernate:
+#        format_sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
   rabbitmq:
-    host: 'localhost'
+    host: "localhost"
     port: 5672
     username: "guest"
     password: "guest"
