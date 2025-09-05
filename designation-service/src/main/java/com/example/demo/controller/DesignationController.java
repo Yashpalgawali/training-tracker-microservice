@@ -27,8 +27,8 @@ import jakarta.validation.Valid;
 @Validated
 public class DesignationController {
 
-	@Value("${build.version}")
-	private String buildInfo;
+//	@Value("${build.version}")
+//	private String buildInfo;
 		
 	@Autowired
 	private DesignationContactInfoDto designationContactInfoDto;
@@ -70,10 +70,10 @@ public class DesignationController {
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(HttpStatus.OK.toString(),
 				"Designation " + designation.getDesignationName() + " is updated successfully"));
 	}
-	@GetMapping("/build-info")
-	public ResponseEntity<String> getBuildInfo(){
-		return ResponseEntity.status(HttpStatus.OK).body(buildInfo);
-	}
+//	@GetMapping("/build-info")
+//	public ResponseEntity<String> getBuildInfo(){
+//		return ResponseEntity.status(HttpStatus.OK).body(buildInfo);
+//	}
 	
 	@GetMapping("/contact-info")
 	public ResponseEntity<DesignationContactInfoDto> getContactInfo(){

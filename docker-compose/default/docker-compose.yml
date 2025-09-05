@@ -35,6 +35,37 @@ services:
       file: common-config.yml
       service: microservice-mongodb-config
 
+  designationservicedb:
+    container_name: "designationservicedb"
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: "designationservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  trainingtimeslotservicedb:
+    container_name: "trainingtimeslotservicedb"
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_DATABASE: "trainingtimeslotservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-mongodb-config
+
+  competencyservicedb:
+    container_name: "competencyservicedb"
+    ports:
+      - 27019:27017
+    environment:
+      MONGO_INITDB_DATABASE: "competencyservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-mongodb-config
+
+
   configserver:
     image: "yashpalgawali/configserver:s6"
     container_name: configserver-ms
@@ -53,6 +84,21 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
+  competencyservice:
+    image: "yashpalgawali/competencyservice:s6"
+    container_name: competency-service-ms
+    ports:
+      - "8787:8787"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "competencyservice"
+      SPRING_DATA_MONGODB_URI: "mongodb://root:root@competencyservicedb:27017/competencyservicedb?authSource=admin"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
   companyservice:
     image: "yashpalgawali/companyservice:s6"
     container_name: company-ms
@@ -70,6 +116,23 @@ services:
       file: common-config.yml
       service: microservice-configserver-config
 
+  designationservice:
+    image: "yashpalgawali/designationservice:s6"
+    container_name: designation-ms
+    ports:
+      - "8484:8484"
+    depends_on:
+      configserver:
+        condition: service_healthy
+      designationservicedb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "designationservice"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://designationservicedb:3306/designationservicedb"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
   trainingservice:
     image: "yashpalgawali/trainingservice:s6"
     container_name: training-service-ms
@@ -81,24 +144,24 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "trainingservice"
       SPRING_DATA_MONGODB_URI: "mongodb://root:root@trainingservicedb:27017/trainingservicedb?authSource=admin"
-
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
-#  trainingtimeslotservice:
-#    image: "yashpalgawali/trainingtimeslotservice:s6"
-#    container_name: training-time-slot-service-ms
-#    ports:
-#      - "8686:8686"
-#    depends_on:
-#      configserver:
-#        condition: service_healthy
-#    environment:
-#      SPRING_APPLICATION_NAME: "trainingtimeslotservice"
-#    extends:
-#      file: common-config.yml
-#      service: microservice-configserver-config
+  trainingtimeslotservice:
+    image: "yashpalgawali/trainingtimeslotservice:s6"
+    container_name: training-time-slot-service-ms
+    ports:
+      - "8686:8686"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "trainingtimeslotservice"
+      SPRING_DATA_MONGODB_URI: "mongodb://root:root@trainingtimeslotservicedb:27017/trainingtimeslotservicedb?authSource=admin"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
 
 networks:
   eazybank:

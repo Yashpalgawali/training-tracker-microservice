@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>training-time-slot-service</artifactId>
+	<artifactId>trainingtimeslotservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>training-time-slot-service</name>
 	<description>Training Time Slot Microservice</description>
